@@ -104,7 +104,7 @@ class ProductEnter(GenerateCode):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField()
     old_quantity = models.IntegerField(blank=True)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
 
     def __str__(self):

@@ -20,7 +20,11 @@
                     <div class="col col-lg-auto">
                         <div class="header-logo ">
                             
-                            <a href="index.html"><h4>{{ request.user.username }}</h4></a>
+                            <a href="index.html">
+                                <h4>{{ request.user.username }}</h4>
+                            
+                            </a>
+                            <a href="{% url 'product-enter-list' %}">product-enter-list</a>                           
                         </div>
                     </div>
                     <div class="col-auto">

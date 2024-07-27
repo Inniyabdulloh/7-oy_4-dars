@@ -8,36 +8,28 @@
 </head>
 <body>
 
+<h1><a href="{% url 'add-product-enter' %}">Add New ProductEnter</a></h1>
+
 <table class="table">
   <thead>
     <tr>
-      
+      <th scope="col">#</th>
       <th scope="col">Product</th>
       <th scope="col">Quantity</th>
-      <th class="col">Old Quantity</th>
       <th scope="col">Date</th>
-      <th class="col">Description</th>
-        <th>Update</th>
-        <th>Delete</th>  
     </tr>
   </thead>
   <tbody>
-  
+  {% for product in products %}
     <tr>
-      
+      <th scope="row">{{ forloop.counter }}</th>
       <td><a href="{% url 'enterProduct' product.generate_code %}">{{ product.product.name }}</a></td>
       <td>{{ product.quantity }}</td>
-      <td>{{ product.old_quantity }}</td>
-        <td>{{ product.date }}</td>
-        <td>{{ product.description }}</td>
-        <td><a href="{% url 'product-enter-update' product.generate_code %}">Update</a></td>
-        <td><a href="#">Delete</a></td>
+      <td>{{ product.date }}</td>
     </tr>
-
+  {% endfor %}
   </tbody>
 </table>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

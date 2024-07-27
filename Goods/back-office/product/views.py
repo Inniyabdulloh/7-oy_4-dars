@@ -3,6 +3,7 @@
 # create ---
 # update ---
 # delete ---
+from django.views import View
 
 from Goods import models
 from django.shortcuts import render, redirect
@@ -60,3 +61,75 @@ def createProduct(request):
 def deleteProduct(request, id):
     models.Product.objects.get(id=id).delete()
     return redirect('listProduct')
+
+
+def productEnter(request, code):
+
+    product = models.ProductEnter.objects.get(generate_code=code)
+    products = models.Product.objects.all()
+    context = {
+        'products': products,
+        'product': product
+    }
+    return render(request, 'back-office/product/product-enter.html', context)
+
+
+class ProductEnterListView(View):
+    def get(self, request):
+        all_enters = models.ProductEnter.objects.all()
+        context = {
+            'products': all_enters
+        }
+
+        return render(request, 'back-office/product/product-enter-list.html', context)
+
+
+class ProductEnterUpdateView(View):
+    def get(self, request, code):
+        product = models.ProductEnter.objects.get(generate_code=code)
+        products = models.Product.objects.all()
+        context = {
+            'products': products,
+            'product': product
+        }
+        return render(request, 'back-office/product/product-enter-update.html', context)
+
+    def post(self, request, code):
+        update_product = models.ProductEnter.objects.get(generate_code=code)
+
+        product = models.Product.objects.get(generate_code=request.POST['product'])
+        quantity = request.POST['quantity']
+        description = request.POST['description']
+
+        update_product.product = product
+        update_product.quantity = int(quantity)
+        # print(type(f" integermi? { quantity}"))
+
+        update_product.description = description
+
+        update_product.save()
+        update_product.refresh_from_db()
+
+        return redirect('enterProduct', code=code )
+
+
+class AddProductEnterView(View):
+    def get(self, request):
+        products = models.Product.objects.all()
+        context = {
+            'products': products
+        }
+        return render(request, 'back-office/product/product_enter-add.html', context )
+    def post(self, request):
+
+        product = request.POST['product']
+        product = models.Product.objects.get(generate_code=product)
+        quantity = request.POST['quantity']
+        description = request.POST['description']
+
+        models.ProductEnter.objects.create(
+            product=product,
+            quantity=int(quantity),
+            description=description
+        )
+        return redirect('product-enter-list')
