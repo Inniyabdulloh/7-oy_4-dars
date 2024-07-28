@@ -55,11 +55,14 @@ class Product(GenerateCode):
 
 
 class ProductImg(GenerateCode):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='imgs')
     img = models.ImageField(upload_to='product-img')
 
     def __str__(self):
         return self.product.name
+
+    def img_url(self):
+        return self.img
 
 
 class Cart(GenerateCode):
