@@ -10,9 +10,9 @@ def myCart(request):
             author=request.user,
             is_active=True)
         products = CartProduct.objects.filter(cart=cart)
-        print(products[0].product.imgs.img)
         context = {
-            'cart': products,
+            'products': products,
+            'cart': cart,
         }
 
     except:
@@ -21,22 +21,20 @@ def myCart(request):
     return render(request, 'back-office/user/cart.html', context)
 
 
-def addProductToCart(request):
-    code = request.GET['code']
-    quantity = request.GET['quantity']
+def addProductToCart(request, code):
     product = models.Product.objects.get(generate_code=code)
     cart, _ = models.Cart.objects.get_or_create(author=request.user, is_active=True)
     try:
         cart_product = models.CartProduct.objects.get(cart=cart, product=product)
-        cart_product.quantity+=quantity
+        cart_product.quantity+=1
         cart_product.save()
     except:
-        cart_product = models.CartProduct.objects.create(
+        models.CartProduct.objects.create(
             product=product, 
             cart=cart,
-            quantity=quantity
+            quantity=1
         )
-    return redirect('/')
+    return redirect('index')
 
 
 def substractProductFromCart(request):
@@ -56,9 +54,9 @@ def deleteProductCart(request, code):
     return redirect('myCart')
 
 
-def CreateOrder(request):
+def CreateOrder(request, code):
     cart = models.Cart.objects.get(
-        generate_code = request.GET['generate_code']
+        generate_code = code
         )
     
     cart_products = models.CartProduct.objects.filter(cart=cart)
@@ -80,11 +78,9 @@ def CreateOrder(request):
         cart=cart,
         full_name = f"{request.user.first_name}, {request.user.last_name}",
         email = request.user.email,
-        phone = request.GET['phone'],
-        address = request.GET['address'],
         status = 1
         )
     cart.is_active = False
     cart.save()
     
-    return redirect('/')
+    return redirect('index')

@@ -1,3 +1,5 @@
+from itertools import product
+
 from django.db import models
 from django.contrib.auth.models import User
 from random import sample
@@ -53,6 +55,10 @@ class Product(GenerateCode):
     def __str__(self):
         return self.name
 
+    @property
+    def img_url(self):
+        return ProductImg.objetcs.get(product=self).img.url
+
 
 class ProductImg(GenerateCode):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='imgs')
@@ -61,6 +67,7 @@ class ProductImg(GenerateCode):
     def __str__(self):
         return self.product.name
 
+    @property
     def img_url(self):
         return self.img
 
@@ -87,8 +94,8 @@ class Order(GenerateCode):
     cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, null=True)
     full_name = models.CharField(max_length=255)
     email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=13)
-    address = models.CharField(max_length=255)
+    phone = models.CharField(max_length=13, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
     status = models.SmallIntegerField(
         choices=(
             (1, 'Tayyorlanmoqda'),
