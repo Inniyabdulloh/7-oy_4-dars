@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br>
+<form class="m-5" method="post" action="{% url 'add-product-enter' %}">
+{% csrf_token %}
+  <div class="mb-3">
+      <label for="product">Products</label>
+      <select name="product" id="product">
+          {% for product in products %}
+            <option value="{{ product.generate_code }}">{{ product.name }}</option>
+          {% endfor %}
+      </select>
+  </div>
+<div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Quantity</label>
+    <input name="quantity" type="number" class="form-control" id="exampleInputPassword1">
+  </div>
+  <div class="mb-3">
+      <label class="form-label" for="exampleCheck11">Description</label>
+      <textarea name="description" type="text" class="form-control" id="exampleCheck11"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

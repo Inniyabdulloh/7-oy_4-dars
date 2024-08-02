@@ -19,7 +19,6 @@ def listProduct(request):
 def detailProduct(request, id):
     queryset = models.Product.objects.get(id=id)
     context = {}
-    print(models.ProductImg.objects.filter(product=queryset))
     context['queryset'] = queryset
     context['images'] = models.ProductImg.objects.filter(product=queryset)
     return render(request, 'back-office/product/detail.html',context)

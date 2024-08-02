@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    
+    <div class="vs-cart-wrapper  space-top space-md-bottom">
+        <div class="container">
+            <div class="woocommerce-notices-wrapper">
+                <div class="woocommerce-message">Shipping costs updated.</div>
+            </div>
+            <form action="#" class="woocommerce-cart-form">
+                <table class="cart_table">
+                    <thead>
+                        <tr>
+                            <th class="cart-col-image">Image</th>
+                            <th class="cart-col-productname">Product Name</th>
+                            <th class="cart-col-price">Price</th>
+                            <th class="cart-col-remove">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       {% for product in wish_list %}
+                        <tr class="cart_item">
+                            <td data-title="Product">
+                                <a class="cart-productimage" href="shop-details.html"><img width="91" height="91" src="{{ product.product.image.url  }}" alt="Image"></a>
+                            </td>
+                            <td data-title="Name">
+                                <a class="cart-productname" href="shop-details.html">{{ product.product.name }}</a>
+                            </td>
+                            <td data-title="Price">
+                                <span class="amount"><bdi><span>$</span>{{ product.product.price }}</bdi></span>
+                            </td>
+                            
+                            <td data-title="Remove">
+                                 <a href="{% url 'addWishlist' product.product.generate_code %}" class="icon-btn" ><i class="bi bi-heart-fill" style="color: #ff3d51;"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    
+                    </tbody>
+                </table>
+            </form>
+    
+{% endblock %}

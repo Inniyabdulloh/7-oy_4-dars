@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <br><br>
+    
+<table class="table table-info m-5 me-6">
+  <thead>
+    <tr>
+      
+      <th scope="col">Title</th>
+      <th scope="col">Sub title</th>
+      <th scope="col">Is active</th>
+      <th scope="col">Image</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>  
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      
+      <td>{{ banner.title }}</td>
+      <td>{{ banner.sub_title }}</td>
+      <td>
+          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              {% if not banner.is_active %}
+          <button type="button" class="btn btn-danger">No Avtive</button>
+              {% else %}
+          <button type="button" class="btn btn-success">Active</button>
+              {% endif %}
+          </div>
+      </td>
+        <td>
+            <img height="75" width="75" src="{{ banner.img.url }}" alt=""></td>
+        <td>
+            <a href="{% url 'banner-update' banner.generate_code %}">Update</a>
+        </td>
+        <td>
+            <a href="{% url 'banner-delete' banner.generate_code %}">Delete</a>
+        </td>
+        
+    </tr>
+
+  </tbody>
+</table>
+
+
+{% endblock %}

@@ -41,7 +41,7 @@
                         {% for product in products %}
                         <tr class="cart_item">
                             <td data-title="Product">
-                                <a class="cart-productimage" href="shop-details.html"><img width="91" height="91" src="{{ product.product.imgs.img_url.url  }}" alt="Image"></a>
+                                <a class="cart-productimage" href="shop-details.html"><img width="91" height="91" src="{{ product.product.image.url  }}" alt="Image"></a>
                             </td>
                             <td data-title="Name">
                                 <a class="cart-productname" href="shop-details.html">{{ product.product.name }}</a>
@@ -67,11 +67,6 @@
                         {% endif %}
                         <tr>
                             <td colspan="6" class="actions">
-                                <div class="vs-cart-coupon">
-                                    <input type="text" class="form-control" placeholder="Coupon Code...">
-                                    <button type="submit" class="vs-btn rounded-1 shadow-none">Apply Coupon</button>
-                                </div>
-                                <button type="submit" class="vs-btn style2 rounded-1 shadow-none">Update cart</button>
                                 <a href="{% url 'createOrder' cart.generate_code %}" class="vs-btn rounded-1 shadow-none">Continue Shopping</a>
                             </td>
                         </tr>

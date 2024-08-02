@@ -1,177 +1,51 @@
+
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <style>
-        .menu-style2 > ul > li > a {
-            padding: 0;
-        }
-
-        .menu-area {
-            padding: 15px;
-        }
-    </style>
-    <!--==============================
-        Header Area
-    ==============================-->
-    <header class="header-wrapper header-layout5">
-        <div class="menu-area ">
-            <div class="container ">
-                <div class="row align-items-center justify-content-between " style="max-height: 60px">
-                    <div class="col col-lg-auto">
-                        <div class="header-logo ">
-                            
-                            <a href="index.html">
-                                <h4>{{ request.user.username }}</h4>
-                            
-                            </a>
-                            <a href="{% url 'product-enter-list' %}">product-enter-list</a>                           
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <nav class="main-menu mobile-menu-active menu-style2">
-                            <ul>
-                                <li class="menu-item-has-children">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="shop.html">Shop</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="shop.html">Shop</a></li>
-                                        <li><a href="shop-list.html">Shop List</a></li>
-                                        <li><a href="shop-details.html">Shop Details</a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="checkout.html">Check Out</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="{% url 'login' %}">Login & Register</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="blog.html">Blog</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog-list.html">Blog List</a></li>
-                                        <li><a href="blog-grid.html">Blog Grid</a></li>
-                                        <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
-                                        <li><a href="blog-masonry.html">Blog Masonry</a></li>
-                                        <li><a href="blog-details.html">Blog Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="mega-menu-wrap menu-item-has-children">
-                                    <a href="#">About</a>
-                                    <ul class="mega-menu">
-
-                                        <li>
-                                            <ul>
-                                                <li><a href="#">About</a></li>
-                                                <li><a href="#">Services</a></li>
-                                                <li><a href="#">Team</a></li>
-                                                <li><a href="#">FAQ Page</a></li>
-                                                <li><a href="#">Contact Us</a></li>
-                                            </ul>
-                                        </li>
-
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="contact.html">Contact Us</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-auto d-none d-sm-block">
-                        <div class="header-buttons">
-                            <button type="button" class="searchBoxTggler"><i class="far fa-search"></i></button>
-                            <a href="wishlist.html"><i class="fal fa-heart"></i></a>
-                            <a class="sideMenuToggle has-badge" href="{% url 'myCart' %}"><i class="fal fa-shopping-cart"></i></a><span
-                                    class="badge">0</span>
-                        </div>
-                    </div>
-                    <div class="col-auto d-block d-lg-none">
-                        <button type="button" class="vs-menu-toggle "><i class="far fa-bars"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-   <!--==============================
-      Hero Area
-    ==============================-->
 
     <div class="  ">
 
         <div class="vs-hero-carousel hero-layout6" data-globalbgimage="{% static 'assets/img/nature.jpg' %}" data-height="810" data-container="1900" data-slidertype="responsive">
              {% for banner in banners %}
             <div class="ls-slide mt-3" data-ls="duration:12000; transition2d:5; kenburnsscale:1.2;">
-                <p style="top:405px; left:375px; font-weight:700; background-size:inherit; background-position:inherit; font-size:65px; color:#fcd55c; font-family:'Advent Pro', sans-serif;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint;">Organic Plants and</p>
+                <p style="top:405px; left:375px; font-weight:700; background-size:inherit; background-position:inherit; font-size:65px; color:#fcd55c; font-family:'Advent Pro', sans-serif;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint;">{{ banner.title }}</p>
+                {% if request.user.is_staff %}
                 <div style="top:611px; left:375px; background-size:inherit; background-position:inherit;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetyin:100; durationin:1500; delayin:800; easingin:easeOutQuint; offsetyout:200; durationout:1500; easingout:easeOutQuint;">
-
-                    <a href="shop.html" class="vs-btn style5 ls-btn">{{ banner.title }}<i class="far fa-angle-right"></i></a>
+                    <a href="{% url 'banner-list' %}" class="vs-btn style5 ls-btn">Banner list<i class="far fa-angle-right"></i></a>
                 </div>
-
-                <img width="658" height="543" src="{{ banner.img.url }}" class="ls-l" alt="image" style="top:54px; left:916px; background-size:inherit; background-position:inherit; width:835px; height:689px;">
-
-
+                {% endif %}
+                <div style="top:611px; left:375px; background-size:inherit; background-position:inherit;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetyin:100; durationin:1500; delayin:800; easingin:easeOutQuint; offsetyout:200; durationout:1500; easingout:easeOutQuint;">
+                </div>
+                <img width="687" height="554" src="{{ banner.img.url }}" class="ls-l ls-hide-tablet ls-hide-phone" alt="image" style="top:215px; left:969px; background-size:inherit; background-position:inherit;">
             </div>
             {% endfor %}
         </div>
 
     </div>
-
     <!--==============================
     Categories Area
     ==============================-->
-    <section class=" space-top">
+    <section class="mb-3 space-top">
         <div class="container">
             <div class="row vs-carousel" data-slide-show="3" id="catboxSlide4645">
-                <div class="col-xl-4">
+                {% for category in categories %}
+                    <div class="col-xl-4">
                     <div class="cat-box">
                         <div class="cat-box__img">
-                            <img src="{% static 'assets/img/category/cat-1-1.png' %}" alt="Category image">
+                            <img height="850" width="650" src="{{ category.img.url }}" alt="Category image">
                         </div>
-                        <h3 class="cat-box__title"><a href="shop.html">Organic Fruits</a></h3>
-                        <p class="cat-box__text">Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies
-                            magna et. Quisque euismod orci lobortis...</p>
+                        <h3 class="cat-box__title">{{ category.name }}</h3>
+                        <p class="cat-box__text">{{ category.description }}</p>
                     </div>
                 </div>
-                <div class="col-xl-4">
-                    <div class="cat-box">
-                        <div class="cat-box__img">
-                            <img src="{% static 'assets/img/category/cat-1-2.png' %}" alt="Category image">
-                        </div>
-                        <h3 class="cat-box__title"><a href="shop.html">Organic Vagitables</a></h3>
-                        <p class="cat-box__text">Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies
-                            magna et. Quisque euismod orci lobortis...</p>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="cat-box">
-                        <div class="cat-box__img">
-                            <img src="{% static 'assets/img/category/cat-1-3.png' %}" alt="Category image">
-                        </div>
-                        <h3 class="cat-box__title"><a href="shop.html">Farms and Family</a></h3>
-                        <p class="cat-box__text">Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies
-                            magna et. Quisque euismod orci lobortis...</p>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="cat-box">
-                        <div class="cat-box__img">
-                            <img src="{% static 'assets/img/category/cat-1-4.png' %}" alt="Category image">
-                        </div>
-                        <h3 class="cat-box__title"><a href="shop.html">Dairy Products</a></h3>
-                        <p class="cat-box__text">Phasellus enim libero, blandit vel sapien vitae, condimentum ultricies
-                            magna et. Quisque euismod orci lobortis...</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <div class="row text-center justify-content-around align-items-center">
                 <div class="col-auto d-none d-sm-block">
                     <button class="slick-arrow" data-slick-prev="#catboxSlide4645" type="button"><i
                             class="fas fa-angle-left"></i></button>
                 </div>
-                <div class="col-auto">
-                    <a href="shop.html" class="vs-btn style3">Start Shopping<i class="fas fa-angle-right"></i></a>
-                </div>
+
                 <div class="col-auto d-none d-sm-block">
                     <button class="slick-arrow" data-slick-next="#catboxSlide4645" type="button"><i
                             class="fas fa-angle-right"></i></button>
@@ -194,28 +68,6 @@
             <span class="sub-title4">Latest Arrivals</span>
             <h2 class="sec-title3">Feature Products</h2>
         </div>
-        <div class="container position-relative">
-            <div class="filter-menu2 vs-slideTab" data-asnavfor="#shopSlide8440">
-                <button class="tab-btn active" data-bs-toggle="tooltip" data-bs-placement="left" title="Best Seller">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-2.png' %}" alt="image" class="bg-1">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-1.png' %}" alt="image" class="bg-2">
-                    <i class="flaticon-salad"></i></button>
-                <button class="tab-btn " data-bs-toggle="tooltip" data-bs-placement="left" title="Popular">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-2.png' %}" alt="image" class="bg-1">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-1.png' %}" alt="image" class="bg-2">
-                    <i class="flaticon-salvsadbox-1"></i></button>
-                <button class="tab-btn " data-bs-toggle="tooltip" data-bs-placement="left" title="Trend">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-2.png' %}" alt="image" class="bg-1">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-1.png' %}" alt="image" class="bg-2">
-                    <i class="flaticon-vegetables"></i></button>
-                <button class="tab-btn " data-bs-toggle="tooltip" data-bs-placement="left" title="Season">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-2.png' %}" alt="image" class="bg-1">
-                    <img src="{% static 'assets/img/shape/filter-icon-bg-1-1.png' %}" alt="image" class="bg-2">
-                    <i class="flaticon-healthy-food"></i></button>
-            </div>
-            
-
-                
                 <div id="season">
                     <div class="row gx-2px justify-content-center">
                         {% for product in products %}
@@ -223,16 +75,18 @@
                             <div class="vs-product-box3 ">
                                 <div class="product-img">
                                     <a href="shop-details.html"><img
-                                            src="{% static 'assets/img/shop/product-3-25.png' %}" alt="Product Image"
+                                            src="{{ product.image.url }}" alt="Product Image"
                                             class="w-100"></a>
                                 </div>
                                 <div class="actions-btn">
+                                    <a href="#" class="icon-btn popup-image"><i class="far fa-search"></i></a>
+                                    <a href="{% url 'addWishlist' product.generate_code %}" class="icon-btn" ><i class="bi bi-heart-fill"{% if product.is_like and request.user in product.like_users %} style="color: #ff3d51;" {% endif %} ></i></a>
                                     <a href="{% url 'addProductToCart' product.generate_code %}" class="vs-btn style4 cart-btn"><i class="fal fa-cart-plus"></i>Add
                                         To Cart</a>
                                 </div>
                                 <div class="product-content">
                                     
-                                    <h4 class="product-title"><a href="shop-details.html">{{ product.name }}</a></h4>
+                                    <h4 class="product-title"><a class="text-decoration-none" href="shop-details.html">{{ product.name }}</a></h4>
                                     <span class="price"><strong>${{ product.price }}</strong></span>
                                 </div>
                             </div>
@@ -241,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            
+    
         </div>
     </section>
     <!--==============================
@@ -270,68 +124,28 @@
                                 </div>
                                 <div class="footer-info">
                                     <i class="fas fa-phone-alt"></i>
-                                    <a href="tel:+387643932728">+387643932728</a>
+                                    <a href="tel:+387643932728">{{ info.phone }}</a>
                                 </div>
                                 <div class="footer-info">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    Harbour House, 60 Purewell, Christchurch, England
+                                    {{ info.address }}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="widget widget_nav_menu  footer-widget">
-                            <h3 class="widget_title">Useful Links</h3>
-                            <div class="menu-all-pages-container footer-links">
-                                <ul class="menu">
-                                    <li><a href="#">Farm & Family</a></li>
-                                    <li><a href="#">Our Butchery</a></li>
-                                    <li><a href="#">Farm Shops</a></li>
-                                    <li><a href="#">Dartmoor Inn</a></li>
-                                    <li><a href="#">Market Garden</a></li>
-                                    <li><a href="#">Farm & Family</a></li>
-                                    <li><a href="#">Our Butchery</a></li>
-                                    <li><a href="#">Farm Shops</a></li>
-                                    <li><a href="#">Dartmoor Inn</a></li>
-                                    <li><a href="#">Market Garden</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-4">
                         <div class="widget footer-widget">
                             <h3 class="widget_title">Instagram Photos</h3>
                             <div class="sidebar-gallery">
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-1.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-1.jpg' %}" alt="Gallery Image"
+                                {% for info_photo in info.photos %}
+                                    <div class="gallery-thumb">
+                                    <a class="popup-image" href="#"><img
+                                            src="{{ info_photo.photo.url }}" alt="Gallery Image"
                                             class="w-100"></a>
                                 </div>
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-2.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-2.jpg' %}" alt="Gallery Image"
-                                            class="w-100"></a>
-                                </div>
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-3.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-3.jpg' %}" alt="Gallery Image"
-                                            class="w-100"></a>
-                                </div>
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-4.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-4.jpg' %}" alt="Gallery Image"
-                                            class="w-100"></a>
-                                </div>
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-5.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-5.jpg' %}" alt="Gallery Image"
-                                            class="w-100"></a>
-                                </div>
-                                <div class="gallery-thumb">
-                                    <a class="popup-image" href="{% static 'assets/img/gallery/gal-2-6.jpg' %}"><img
-                                            src="{% static 'assets/img/gallery/gal-2-6.jpg' %}" alt="Gallery Image"
-                                            class="w-100"></a>
-                                </div>
+                                {% endfor %}
+                                
                             </div>
                         </div>
                     </div>
@@ -349,9 +163,9 @@
                     </div>
                     <div class="col-auto d-none d-lg-block">
                         <div class="copyright-social">
-                            <a href="#"><i class="fab fa-facebook-f"></i>Facebook</a>
-                            <a href="#"><i class="fab fa-twitter"></i>Twitter</a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i>Linked In</a>
+                            <a href="{{ info.facebook }}"><i class="fab fa-facebook-f"></i>Facebook</a>
+                            <a href="{{ info.twitter }}"><i class="fab fa-twitter"></i>Twitter</a>
+                            <a href="{{ info.linkedin }}"><i class="fab fa-linkedin-in"></i>Linked In</a>
                         </div>
                     </div>
                 </div>

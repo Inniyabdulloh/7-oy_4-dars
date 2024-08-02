@@ -51,6 +51,8 @@ class Product(GenerateCode):
     price: float = models.DecimalField(max_digits=8, decimal_places=2)
     category: Category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description: str = models.TextField()
+    image = models.ImageField(upload_to='products/', null=True)
+
 
     def __str__(self):
         return self.name
@@ -59,6 +61,24 @@ class Product(GenerateCode):
     def img_url(self):
         return ProductImg.objetcs.get(product=self).img.url
 
+
+    @property
+    def images(self):
+        images = ProductImg.objects.filter(product=self)
+        return images
+    @property
+    def is_like(self):
+        products = WishList.objects.filter(product=self)
+        return products
+
+    @property
+    def like_users(self):
+        users = []
+        products = WishList.objects.filter(product=self)
+        if products:
+            for user in products:
+                users.append(user.user)
+        return users
 
 class ProductImg(GenerateCode):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='imgs')
@@ -130,3 +150,27 @@ class ProductEnter(GenerateCode):
 
         self.product.save()
         super(ProductEnter, self).save(*args, **kwargs)
+
+
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+
+class Info(GenerateCode):
+     phone = models.CharField(max_length=20, null=True, blank=True)
+     address = models.CharField(max_length=255, null=True, blank=True)
+     facebook = models.CharField(max_length=255, null=True, blank=True)
+     twitter = models.CharField(max_length=255, null=True, blank=True)
+     linkedin = models.CharField(max_length=255, null=True, blank=True)
+     is_active = models.BooleanField(default=False)
+
+
+     @property
+     def photos(self):
+         photos = InfoInstaPhoto.objects.filter(info=self)
+         return photos
+
+class InfoInstaPhoto(GenerateCode):
+    info = models.ForeignKey(Info, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='photos/')

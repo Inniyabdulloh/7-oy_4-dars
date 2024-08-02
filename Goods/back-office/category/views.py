@@ -13,7 +13,7 @@ def listCategory(request):
     queryset = models.Category.objects.all()
     
     context = {}
-    context['queryset'] = queryset
+    context['categories'] = queryset
 
     return render(request, 'back-office/category/list.html', context)
 

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br>
+<h1 class="m-5"><a class="text-decoration-none" href="{% url 'add-product-enter' %}">Add New ProductEnter</a></h1>
+
+<table class="table table-info m-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">title</th>
+      <th scope="col">sub title</th>
+      <th scope="col">is active</th>
+      <th scope="col">img</th>  
+    </tr>
+  </thead>
+  <tbody>
+  {% for banner in banners %}
+    <tr class="mb-2">
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a class="text-decoration-none" href="{% url 'banner-detail' banner.generate_code %}">{{ banner.title }}</a></td>
+      <td>{{ banner.sub_title }}</td>
+      <td>
+          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              {% if not banner.is_active %}
+          <button type="button" class="btn btn-danger">No Avtive</button>
+              {% else %}
+          <button type="button" class="btn btn-success">Active</button>
+              {% endif %}
+        </div>
+      </td>
+      <td>rasm</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

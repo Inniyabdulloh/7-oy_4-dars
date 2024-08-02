@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.views import View
+
 from Goods import models
 from Goods.models import CartProduct
 
@@ -6,7 +8,7 @@ from Goods.models import CartProduct
 def myCart(request):
 
     try:
-        cart = models.Cart.objects.get(
+        cart, _ = models.Cart.objects.get_or_create(
             author=request.user,
             is_active=True)
         products = CartProduct.objects.filter(cart=cart)
@@ -17,7 +19,7 @@ def myCart(request):
 
     except:
         context = {}
-        ...
+
     return render(request, 'back-office/user/cart.html', context)
 
 
@@ -56,7 +58,7 @@ def deleteProductCart(request, code):
 
 def CreateOrder(request, code):
     cart = models.Cart.objects.get(
-        generate_code = code
+        generate_code=code
         )
     
     cart_products = models.CartProduct.objects.filter(cart=cart)
@@ -84,3 +86,25 @@ def CreateOrder(request, code):
     cart.save()
     
     return redirect('index')
+
+class VishListView(View):
+    def get(self, request):
+        wish_list = models.WishList.objects.filter(user=request.user)
+        context = {
+            'wish_list': wish_list
+        }
+        return render(request, 'back-office/user/wish-list.html', context)
+
+
+class AddWishListView(View):
+    def get(self, request, code):
+        product = models.Product.objects.get(generate_code=code)
+        data, is_create = models.WishList.objects.get_or_create(
+            user=request.user,
+            product=product,
+        )
+        if not is_create:
+            data.delete()
+
+        return redirect('index')
+
