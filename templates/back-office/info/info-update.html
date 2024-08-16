@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content  %}
+
+    <br><br>
+
+<form enctype="multipart/form-data" class="m-5 form" method="post" action="{% url 'info-update' info.generate_code %}">
+{% csrf_token %}
+  <div class="mb-3">
+      <label for="product">Phone</label>
+      <input name="phone" type="text" value="{{ info.phone }}">
+  </div>
+    <div class="mb-3">
+      <label for="product">Address</label>
+        <textarea name="address" type="text" >{{ info.address }}</textarea>
+  </div>
+  <div class="mb-3">
+    <div class="form-check form-switch">
+      <input name="active" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Active ?</label>
+    </div>
+  </div>
+
+<div class="mb-3">
+      <label for="product">Facebook</label>
+        <input name="facebook" type="text" value="{{ info.facebook }}">
+  </div>
+<div class="mb-3">
+      <label for="product">Twitter</label>
+        <input name="twitter" type="text" value="{{ info.twitter }}">
+  </div>
+<div class="mb-3">
+      <label for="product">linkedin</label>
+        <input name="linkedin" type="text" value="{{ info.linkedin }}">
+  </div>
+
+  <div class="mb-3">
+      {% for img in info.photos %}
+        <img height="120" width="120" src="{{ img.photo.url }}" alt="">
+      {% endfor %}
+      </div>
+    <label for="img">Images</label>
+      <input id="img" multiple type="file" name="photos">
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+{% endblock %}
+
+

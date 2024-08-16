@@ -1,9 +1,8 @@
-from itertools import product
-
 from django.db import models
 from django.contrib.auth.models import User
 from random import sample
 import string
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 
 class GenerateCode(models.Model):
@@ -170,6 +169,12 @@ class Info(GenerateCode):
      def photos(self):
          photos = InfoInstaPhoto.objects.filter(info=self)
          return photos
+
+     @property
+     def photo(self):
+         photo = get_list_or_404(InfoInstaPhoto, info=self)[-1].photo
+         return photo
+
 
 class InfoInstaPhoto(GenerateCode):
     info = models.ForeignKey(Info, on_delete=models.CASCADE)

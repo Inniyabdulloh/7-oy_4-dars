@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br><br>
+<h1 class="m-5"><a class="text-decoration-none" href="{% url 'info-create' %}">Add New Info</a></h1>
+
+<table class="table table-info m-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Address</th>
+      <th scope="col">is active</th>
+      <th scope="col">Photo</th>  
+    </tr>
+  </thead>
+  <tbody>
+  {% for info in infos %}
+    <tr class="mb-2">
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><a class="text-decoration-none" href="{% url 'info-detail' info.generate_code %}">{{ info.phone }}</a></td>
+      <td>{{ info.address }}</td>
+      <td>
+          <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              {% if not info.is_active %}
+          <button type="button" class="btn btn-danger">No Avtive</button>
+              {% else %}
+          <button type="button" class="btn btn-success">Active</button>
+              {% endif %}
+        </div>
+      </td>
+      <td><img height="75" width="75" src="{{ info.photo.url }}" alt=""></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
