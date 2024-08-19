@@ -10,4 +10,5 @@ urlpatterns = [
     path('user-login/', views.UserLoginAPIView.as_view()),
     path('cart/', views.CartAPIView.as_view()),
     path('cart/add-product/<str:code>/', views.AddToCartAPIView.as_view()),
+    path('cart/remove-product/<str:code>/', views.RemoveProductFromCartAPIView.as_view()),
 ]

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.shortcuts import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import permission_classes, authentication_classes
@@ -7,7 +8,7 @@ from rest_framework.views import APIView
 
 from Goods import models
 from . import serializers
-from Goods.models import Product, Category
+from Goods.models import Product, Category, CartProduct, Cart
 from rest_framework.authtoken.models import Token
 # Create your views here.
 
@@ -54,7 +55,7 @@ class UserLoginAPIView(APIView):
        username = request.data.get('username')
        password = request.data.get('password')
        user = authenticate(request, username=username, password=password)
-       print(user)
+
        if user:
            token_key, _ = Token.objects.get_or_create(user=user)
            user_serializer = serializers.UserSerializer(user)
@@ -91,6 +92,7 @@ class CartAPIView(APIView):
         return Response(context)
 
 
+
 class AddToCartAPIView(APIView):
     def post(self, request, code):
         product = models.Product.objects.get(generate_code=code)
@@ -99,12 +101,19 @@ class AddToCartAPIView(APIView):
             cart_product = models.CartProduct.objects.get(cart=cart, product=product)
             cart_product.quantity += 1
             cart_product.save()
-            return Response({'message': "Product has been added to cart"}, status=status.HTTP_201_CREATED)
         except:
             models.CartProduct.objects.create(
                 product=product,
                 cart=cart,
                 quantity=1
             )
+        return Response({'product_code': f"{code}"}, status=status.HTTP_201_CREATED)
 
-            return Response({'message': "Product has been added +1 to cart"}, status=status.HTTP_201_CREATED)
+
+class RemoveProductFromCartAPIView(APIView):
+    def post(self, request, code):
+        product_cart = models.CartProduct.objects.get(generate_code=code)
+        product_cart.delete()
+        return Response({'product_code': f"{code}"}, status=status.HTTP_204_NO_CONTENT)
+
+

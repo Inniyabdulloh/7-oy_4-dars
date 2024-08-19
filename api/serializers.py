@@ -29,7 +29,7 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['code', 'username', 'firstname', 'lastname', 'password']
+        fields = ['username', 'password']
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -44,3 +44,10 @@ class CartProductsSerializer(serializers.ModelSerializer):
         exclude = ['generate_code',]
         depth = 1
 
+
+
+
+class CartProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartProduct
+        fields = ['generate_code', 'product', 'cart', 'quantity']
